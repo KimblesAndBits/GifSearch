@@ -1,4 +1,21 @@
+* {
+    font-family: 'Concert One', cursive;
+}
+
 .content-wrapper {
     width: 95%;
     margin: auto;
+    text-align: center;
+}
+
+.jumbotron, .jumbotron-fluid {
+background-color: #526F35;
+}
+
+#input-area {
+    border-left: solid #16161d 2px;
+}
+
+body {
+    background-color: goldenrod;
 }
