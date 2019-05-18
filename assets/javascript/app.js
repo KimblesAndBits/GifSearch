@@ -1,7 +1,7 @@
 $(document).ready(function (){
 var topics = ["The Legend of Zelda", "Super Smash Brothers", "Nintendo Switch", "Apple Computers", "Playstation", "Coding", "The Big Lebowski", "The Decemberists", "The Office", "Parks and Rec", "The Good Place", "Star Wars"];
 if(typeof localStorage.topics !== "undefined"){
-    topics = localStorage.getItem("topics");
+    topics = JSON.parse(localStorage.getItem("topics"));
 };
 var apiKey = "api_key=fjZDB3KgrG7UOjBcD3hTIaQfUsIemsu6";
 var gifLimit = 10;
@@ -24,13 +24,27 @@ $(document.body).on("click", ".topic-button", function () {
         url: queryURL,
         method: "GET"
       }).then(function(response) {
-          console.log(response);
           var gifList = response.data;
           gifList.forEach(function(element){
             var newGif = $(`<div class="col-md-3"><img src="${element.images.original_still.url}" alt="${element.slug}" width="100%"><p>Rating: ${element.rating}</p></div>`);
             $("#gif-area").prepend(newGif);
           });
       });
+});
+
+$("#limit-button").on("click", function () {
+    event.preventDefault();
+    gifLimit = $("#limit-number").val();
+    $("#limit-number").val("");
+});
+
+$("#search-button").on("click", function () {
+    event.preventDefault();
+    var newTerm = $("#search-term").val()
+    topics.push(newTerm);
+    localStorage.setItem("topics", JSON.stringify(topics));
+    $("#button-area").empty();
+    renderButtons();
 });
 
 });
